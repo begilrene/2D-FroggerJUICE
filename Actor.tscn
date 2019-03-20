@@ -1,0 +1,61 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Player/Idle/spr_frog_g_idle_anim-0.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Player/Idle/spr_frog_g_idle_anim-1.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/Idle/spr_frog_g_idle_anim-2.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Player/Idle/spr_frog_g_idle_anim-3.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Player/Idle/spr_frog_g_idle_anim-4.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Player/spr_frog_g_jump_1launch_anim-0.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Player/spr_frog_g_jump_1launch_anim-1.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Player/spr_frog_g_jump_1launch_anim-2.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Player/spr_frog_g_jump_1launch_anim-3.png" type="Texture" id=10]
+
+[sub_resource type="SpriteFrames" id=1]
+
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 12.0
+} ]
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 16, 16 )
+
+[node name="Actor" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+velocity = Vector2( 0, 0 )
+speed = 5000
+lives = 3
+
+[node name="Visible" type="AnimatedSprite" parent="." index="0"]
+
+position = Vector2( 16, -16 )
+scale = Vector2( 1, 0.8 )
+frames = SubResource( 1 )
+animation = "Idle"
+_sections_unfolded = [ "Transform" ]
+
+[node name="Collision" type="CollisionShape2D" parent="." index="1"]
+
+position = Vector2( 16, 0 )
+shape = SubResource( 2 )
+_sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z Index" ]
+
+[connection signal="animation_finished" from="Visible" to="." method="_on_Visible_animation_finished"]
+
+
